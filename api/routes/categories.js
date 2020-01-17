@@ -1,14 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const categoryData = require('./../../src/data/categories.json');
-const productData = require('./../../src/data/products.json');
-const all_products = productData.products;
+const dataService = require('./../../dataService.js');
 
-router.get('/:ctyId', (req, res, next)=>{
-  // step 6 In this it shows all the products related to categoryId .
-    const { ctyId } = req.params
-    const products = all_products.filter(p => p.categoryId === ctyId) || []
-     res.status(200).json({ products })
+// Getting all the products under a category based on category's ID
+router.get('/:ctyId', (req, res, next) => {
+  const { ctyId } = req.params;
+  const productsforparticularCategory = Object.fromEntries(
+    Array.from(dataService.getCombinedProductMap()).filter(([productId,
+      product]) => product.categoryId === ctyId) || []);
+  res.status(200).json(productsforparticularCategory);
+  // If id entered is Invalid ID otherwise result.
+  if (!productsforparticularCategory) {
+    return res.send('Invalid category ID');
+  }
+  res.json(productsforparticularCategory);
 });
-// The whole project has a server 3000 port named in server.js file.
+
 module.exports = router;
+// The whole project has a server 3000 port named in server.js file.
