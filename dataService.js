@@ -13,7 +13,7 @@ function getProducts() {
   const productsRawData = require('./src/data/products.json');
   const productMapForReturn = new Map();
 
-  for (const food of productsRawData.products) {
+  for (const product of productsRawData.products) {
     productMapForReturn.set(food.id, food);
   };
 
