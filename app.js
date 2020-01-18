@@ -7,6 +7,6 @@ const categoryRoute = require('./api/routes/categories');
 // These there are the starting route which are further written in other files.
 app.use('/products', productsRoute);
 app.use('/product', productRoute);
-app.use('/category', categoryRoute)
+app.use('/category', categoryRoute);
 
 module.exports = app;
